@@ -1,0 +1,47 @@
+RITMO — TESTE LOCAL
+
+Protótipo local de gerenciamento de tarefas inspirado no Trello, com quadro, Pomodoro e detalhes do cartão. Não precisa de conta, hospedagem ou banco em nuvem.
+
+COMO ABRIR NO COMPUTADOR
+1. Abra index.html no Microsoft Edge ou Google Chrome.
+2. Os cartões de exemplo aparecem na primeira abertura.
+
+COMO ABRIR NO CELULAR PELA REDE WI-FI
+1. Deixe o computador e o celular conectados à mesma rede Wi-Fi.
+2. No computador, execute abrir-no-celular.ps1. Ele inicia um servidor local e mostra o endereço.
+3. Digite no navegador do celular o endereço impresso, por exemplo http://192.168.0.10:8000.
+4. Mantenha a janela do PowerShell aberta enquanto usa o app.
+
+Se o Windows Firewall perguntar, permita a conexão na rede privada para que o celular alcance o computador. Este endereço serve apenas dentro da rede local.
+
+CARTÕES
+- Arraste cartões com o mouse entre as listas ou mantenha pressionado no celular para mover.
+- “Adicionar um cartão” aparece ao fim de cada lista.
+- O quadro começa com três listas; use “Adicionar outra lista” para criar colunas personalizadas.
+- No menu “•••” de uma lista: adicionar cartão, copiar a lista, mudar sua posição, mover todos os cartões, ordenar cartões, deletar a lista ou deletar seus cartões.
+- As exclusões pedem confirmação. Depois de confirmar, há 15 segundos para desfazer; no celular também é possível arrastar o aviso para baixo para dispensá-lo.
+- No computador, os cartões mostram três itens da checklist; “Mostrar mais” expande os demais. No celular, abra o cartão para ver a checklist completa.
+- No celular, a navegação fica fixa no rodapé. Use os atalhos Início, Tarefas e Calendário; o botão rosa com tomate abre o Pomodoro em qualquer tela.
+- Na tela inicial mobile, o resumo amarelo é seguido pela agenda compacta do dia e pelo progresso. Deslize a agenda para trocar de dia ou toque nela para abrir o calendário completo com visões de dia, mês e ano, indicadores de tarefas e detalhes do dia selecionado.
+- O quadro mobile mostra as listas em sequência para facilitar a leitura vertical.
+- Abra um cartão para alterar título, descrição e lista, iniciar o Pomodoro ou excluir.
+- As etiquetas padrão são inspiradas nas cores do Trello. Crie etiquetas adicionais com o nome e a cor que preferir; elas ficam disponíveis no quadro.
+- Em “Datas”, use o calendário mensal para definir data de início e entrega, horário, recorrência e lembrete. Recorrência e lembretes são salvos no cartão; notificações automáticas não estão habilitadas neste protótipo.
+- Em “Checklist”, crie checklists nomeados. Você pode copiar os itens de uma checklist de outro cartão. Depois de adicionar um item, pressione Enter para continuar no campo abaixo.
+- Em “Anexo”, selecione imagens. Você também pode arrastar arquivos de imagem para o cartão ou colar uma imagem com Ctrl+V. As imagens são reduzidas e guardadas localmente no cartão.
+- Comentários, tarefas, etiquetas e checklists são armazenados neste navegador.
+
+BACKUP E ARMAZENAMENTO
+- Os dados não são enviados a um servidor. Computador e celular mantêm armazenamentos separados.
+- Use “Exportar backup” e “Importar” para copiar tarefas entre navegadores/dispositivos.
+- Anexos de imagem também entram no backup; muitos anexos podem deixar o arquivo de backup maior.
+
+POMODORO
+- Foco: 25 minutos
+- Pausa curta: 5 minutos
+- Pausa longa: 15 minutos
+- Após quatro sessões completas, o timer sugere uma pausa longa.
+
+INSTALAÇÃO
+- O app se adapta ao navegador do celular.
+- Instalação como app e cache offline dependem de uma origem segura (HTTPS ou localhost). O endereço local por Wi-Fi usa HTTP e serve para teste no navegador; não habilita a instalação PWA no celular.
