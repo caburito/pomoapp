@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Ritmo">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Ritmo — tarefas e foco</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-mobile-screen="home">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Ritmo, início">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span><strong>ritmo</strong><small>tarefas com foco</small></span>
+      </a>
+
+      <div class="sidebar-label">ESPAÇO PESSOAL</div>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <button class="nav-link is-active" id="nav-today" type="button">
+          <span class="nav-icon">◷</span><span>Meu dia</span>
+        </button>
+        <button class="nav-link" id="nav-board" type="button">
+          <span class="nav-icon">▦</span><span>Meu quadro</span>
+        </button>
+        <button class="nav-link" id="nav-focus" type="button">
+          <span class="nav-icon">✦</span><span>Foco</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-note">
+        <span class="note-spark">✦</span>
+        <strong>Um passo de cada vez.</strong>
+        <p>Pequenas sessões de foco também contam.</p>
+      </div>
+      <button class="nav-link" id="restore-demo" type="button">
+        <span class="nav-icon">↺</span><span>Restaurar exemplo</span>
+      </button>
+      <div class="local-status"><span class="status-dot"></span>Dados neste navegador</div>
+    </aside>
+
+    <main class="app-main">
+      <header class="topbar">
+        <div class="today-stamp">
+          <span class="eyebrow" id="long-date">SEU ESPAÇO PESSOAL</span>
+          <span class="local-chip"><span class="status-dot"></span>salvo localmente</span>
+        </div>
+        <div class="top-actions">
+          <button class="quiet-button" id="export-data" type="button" title="Baixar um backup dos seus dados">
+            <span aria-hidden="true">↓</span><span>Exportar backup</span>
+          </button>
+          <label class="quiet-button import-button" for="import-data" title="Restaurar dados de um arquivo JSON">
+            <span aria-hidden="true">↑</span><span>Importar</span>
+          </label>
+          <input id="import-data" type="file" accept="application/json,.json" hidden>
+          <button class="profile-avatar" id="profile-button" type="button" aria-label="Perfil">B</button>
+        </div>
+      </header>
+
+      <section class="page-intro">
+        <div>
+          <p class="eyebrow" id="greeting">BOM DIA</p>
+          <h1>Seu dia,<br class="mobile-break"> no seu ritmo<span class="period">.</span></h1>
+          <p class="intro-copy">Organize o que importa e reserve um tempo para focar.</p>
+        </div>
+        <div class="mobile-intro" aria-live="polite">
+          <h1 class="mobile-view-title" id="mobile-view-title">Olá, Bruno</h1>
+          <span class="mobile-welcome" id="mobile-welcome">Bem-vindo de volta</span>
+        </div>
+      </section>
+
+      <div class="dashboard-grid">
+        <div class="primary-column">
+          <section class="summary-card" aria-labelledby="summary-title">
+            <div class="summary-copy">
+              <p class="summary-kicker"><span class="sun-dot">✦</span><span class="desktop-summary-label">VISÃO DE HOJE</span><span class="mobile-summary-label">Current tasks</span></p>
+              <h2 id="summary-title">Você tem <span id="today-open-count">0</span> <span id="task-count-word">tarefas</span> para <span id="summary-day-label">hoje</span></h2>
+              <p id="summary-subtitle">Escolha uma e comece no seu tempo.</p>
+              <button class="summary-link" id="summary-focus" type="button"><span class="summary-link-label">Ver tarefas de hoje</span><span aria-hidden="true">↗</span></button>
+            </div>
+            <div class="summary-art" aria-hidden="true">
+              <span class="art-ring ring-one"></span><span class="art-ring ring-two"></span>
+              <span class="art-card art-card-back"></span>
+              <span class="art-card art-card-front"><i>✓</i><b>feito</b></span>
+              <span class="art-spark">✦</span>
+            </div>
+          </section>
+
+          <section class="quick-stats" aria-label="Resumo das tarefas">
+            <article class="stat-tile">
+              <span class="stat-icon icon-lavender">▦</span>
+              <span class="stat-copy"><strong id="open-total">0</strong><small>em aberto</small></span>
+            </article>
+            <article class="stat-tile">
+              <span class="stat-icon icon-yellow">✓</span>
+              <span class="stat-copy"><strong id="done-total">0</strong><small>concluídas</small></span>
+            </article>
+            <article class="stat-tile">
+              <span class="stat-icon icon-peach">◷</span>
+              <span class="stat-copy"><strong id="focus-total">0</strong><small>ciclos de foco</small></span>
+            </article>
+          </section>
+
+          <section class="calendar-section panel" aria-labelledby="calendar-title">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">PLANEJE COM LEVEZA</p>
+                <h2 id="calendar-title">Esta semana</h2>
+              </div>
+              <button class="text-button" id="calendar-today" type="button">Hoje <span>↗</span></button>
+            </div>
+            <div class="week-strip" id="calendar-strip" aria-label="Calendário da semana"></div>
+            <p class="calendar-note" id="calendar-note">Toque em um dia para ver as tarefas.</p>
+          </section>
+
+          <section class="home-day-card" id="home-day-card" aria-label="Agenda do dia">
+            <div class="home-day-heading">
+              <button class="day-step-button" type="button" data-day-step="-1" aria-label="Dia anterior">‹</button>
+              <button class="home-day-open-calendar" id="home-day-open-calendar" type="button" aria-label="Abrir calendário do dia">
+                <span class="home-task-day"><strong id="home-day-number">--</strong><small id="home-day-weekday">---</small></span>
+                <span class="home-task-copy"><strong id="home-day-primary-title">Carregando agenda...</strong><small id="home-day-primary-meta">Toque para abrir o calendário</small></span>
+                <span class="home-task-arrow" aria-hidden="true">↗</span>
+              </button>
+              <button class="day-step-button" type="button" data-day-step="1" aria-label="Próximo dia">›</button>
+            </div>
+            <div class="home-day-task-list" id="home-day-task-list"></div>
+            <button class="home-calendar-link" id="home-calendar-link" type="button">Abrir calendário <span aria-hidden="true">↗</span></button>
+          </section>
+
+          <section class="home-progress-card" aria-labelledby="home-progress-title">
+            <div class="home-progress-top"><p id="home-progress-title">Seu progresso</p><div class="progress-period-toggle" role="group" aria-label="Período do progresso"><button class="is-active" data-progress-period="weekly" type="button">Semanal</button><button data-progress-period="monthly" type="button">Mensal</button></div></div>
+            <div class="home-progress-main"><strong id="home-progress-message">Você está indo bem!</strong><span id="home-progress-value">0%</span></div>
+            <p id="home-progress-note">Cada pequeno passo conta.</p>
+          </section>
+
+        </div>
+
+        <aside class="focus-column" id="focus-panel">
+          <section class="timer-card" aria-labelledby="timer-title">
+            <div class="timer-card-top">
+              <div>
+                <p class="timer-kicker">SEU ESPAÇO DE FOCO</p>
+                <h2 id="timer-title">Pomodoro</h2>
+              </div>
+              <span class="timer-mark" aria-hidden="true">✦</span>
+              <button class="timer-mobile-close" id="timer-mobile-close" type="button" aria-label="Fechar Pomodoro">×</button>
+            </div>
+            <div class="timer-task">
+              <span class="timer-task-dot"></span>
+              <span id="timer-task-name">Escolha uma tarefa para começar</span>
+            </div>
+            <div class="timer-display" id="timer-display" aria-live="off">25:00</div>
+            <div class="timer-progress"><span id="timer-progress-fill"></span></div>
+            <div class="timer-modes" role="group" aria-label="Modo do timer">
+              <button class="timer-mode is-active" data-mode="focus" type="button">Foco</button>
+              <button class="timer-mode" data-mode="short" type="button">Pausa curta</button>
+              <button class="timer-mode" data-mode="long" type="button">Pausa longa</button>
+            </div>
+            <div class="timer-actions">
+              <button class="timer-start" id="timer-toggle" type="button">Começar foco</button>
+              <button class="timer-reset" id="timer-reset" type="button" aria-label="Reiniciar timer">↺</button>
+            </div>
+            <div class="timer-foot">
+              <span><i class="session-dot"></i><span id="session-count">0 sessões completas</span></span>
+              <span>25 · 5 · 15 min</span>
+            </div>
+          </section>
+          <section class="focus-tip">
+            <span class="tip-icon">✦</span>
+            <div><strong>Uma coisa por vez.</strong><p>Comece pequeno. O próximo passo fica mais fácil depois do primeiro.</p></div>
+          </section>
+        </aside>
+      </div>
+      <section class="board-section" id="board-section" aria-labelledby="board-title">
+        <div class="section-heading board-heading">
+          <div>
+            <p class="eyebrow">SEU QUADRO</p>
+            <h2 id="board-title">Tarefas <span class="heading-date" id="active-date-label"></span></h2>
+          </div>
+        </div>
+        <p class="board-hint">Arraste os cartões entre as listas ou adicione uma nova coluna ao quadro.</p>
+        <div class="board-filters" role="group" aria-label="Filtrar tarefas">
+          <button class="filter-button is-selected" data-filter="today" type="button">Hoje</button>
+          <button class="filter-button" data-filter="all" type="button">Todas</button>
+          <button class="filter-button" data-filter="open" type="button">Em aberto</button>
+          <button class="filter-button" data-filter="done" type="button">Concluídas</button>
+        </div>
+        <div class="board-columns" id="task-board"></div>
+      </section>
+      <footer class="app-footer"><span>Ritmo</span><span>Um protótipo local para organizar tarefas e foco.</span></footer>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navegação mobile">
+    <img class="mobile-nav-mask" src="assets/bottom-nav-mask.svg" alt="" aria-hidden="true">
+    <div class="mobile-nav-items">
+      <button class="mobile-nav-button" id="mobile-nav-home" type="button" data-mobile-view="home" aria-label="Início" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 10.5 8.5-7 8.5 7v9a1.5 1.5 0 0 1-1.5 1.5h-5.2v-6.4h-3.6V21H5a1.5 1.5 0 0 1-1.5-1.5z"/></svg><span class="visually-hidden">Início</span></button>
+      <button class="mobile-nav-button" id="mobile-nav-board" type="button" data-mobile-view="board" aria-label="Tarefas"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="visually-hidden">Tarefas</span></button>
+      <button class="mobile-nav-button" id="mobile-nav-calendar" type="button" data-calendar-launch aria-label="Calendário"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M7.5 3.5v3M16.5 3.5v3M3.5 9h17M8 12.5h.01M12 12.5h.01M16 12.5h.01M8 16h.01M12 16h.01"/></svg><span class="visually-hidden">Calendário</span></button>
+      <button class="mobile-nav-pomodoro" id="mobile-nav-pomodoro" type="button" aria-label="Abrir Pomodoro" aria-expanded="false"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M19.8 10.6c-1.6-2.5-.2-5.1 2.3-6.2.2 2.4-.5 4.3-2.3 6.2Zm1.1 1.2c1.9-3.1 5.2-4.2 8.6-3.3-1.3 3.2-4.1 4.8-8.6 3.3Z"/><path d="M20 12.1c-2.4-2.1-5.5-2-8-.9-1.1-1.1-2.1-1.6-3.6-1.7.3 1.7.9 2.8 2.3 3.8-2.3 2.2-3.7 5.2-3.7 8.5 0 6.5 5.4 11.8 12 11.8s12-5.3 12-11.8c0-3.4-1.5-6.5-3.9-8.7-2.4-.9-4.8-.8-7.1-1Z"/><path d="M20 18v4.3l3 1.8"/></svg><span class="visually-hidden">Pomodoro</span></button>
+    </div>
+  </nav>
+
+  <dialog class="task-dialog" id="task-dialog">
+    <form class="dialog-panel" id="task-form">
+      <div class="trello-dialog-top">
+        <label class="status-select-wrap"><span class="visually-hidden">Lista</span>
+          <select id="task-status" name="status" aria-label="Lista da tarefa">
+          </select>
+        </label>
+        <button class="dialog-close" id="dialog-close" type="button" aria-label="Fechar">×</button>
+      </div>
+      <div class="dialog-grid">
+        <div class="dialog-main">
+          <div class="task-title-row"><span class="task-complete-mark" aria-hidden="true">○</span>
+            <input class="text-field title-field" id="task-title" name="title" maxlength="90" placeholder="Nome do cartão" required>
+          </div>
+          <div class="card-action-bar">
+            <div class="action-menu-wrap">
+              <button class="card-action-button" type="button" data-card-action="labels">◇ <span>Etiquetas</span></button>
+              <div class="action-popover label-popover" id="labels-popover" hidden>
+                <div class="popover-heading"><strong>Etiquetas</strong><button type="button" class="popover-close" data-close-popover aria-label="Fechar">×</button></div>
+                <input class="text-field popover-search" id="label-search" placeholder="Buscar etiquetas..." autocomplete="off">
+                <p class="popover-caption">Etiquetas do quadro</p>
+                <div class="label-options" id="label-options"></div>
+                <div class="create-label-row">
+                  <input class="text-field" id="new-label-name" maxlength="24" placeholder="Criar etiqueta">
+                  <input id="new-label-color" type="color" value="#61bd4f" aria-label="Cor da nova etiqueta">
+                  <button class="small-popover-button" type="button" data-create-label>Criar</button>
+                </div>
+              </div>
+            </div>
+            <div class="action-menu-wrap">
+              <button class="card-action-button" type="button" data-card-action="dates">◷ <span>Datas</span></button>
+              <div class="action-popover date-popover" id="dates-popover" hidden>
+                <div class="popover-heading"><strong>Datas</strong><button type="button" class="popover-close" data-close-popover aria-label="Fechar">×</button></div>
+                <div class="calendar-month-heading">
+                  <button type="button" data-calendar-month="-12" aria-label="Ano anterior">«</button><button type="button" data-calendar-month="-1" aria-label="Mês anterior">‹</button>
+                  <strong id="task-calendar-month">mês ano</strong>
+                  <button type="button" data-calendar-month="1" aria-label="Próximo mês">›</button><button type="button" data-calendar-month="12" aria-label="Próximo ano">»</button>
+                </div>
+                <div class="calendar-weekdays"><span>dom</span><span>seg</span><span>ter</span><span>qua</span><span>qui</span><span>sex</span><span>sáb</span></div>
+                <div class="task-calendar-grid" id="task-calendar-grid"></div>
+                <div class="date-field-group">
+                  <label class="date-check-row"><input id="start-date-enabled" type="checkbox"><span>Data de início</span></label>
+                  <input class="text-field" id="task-start" type="date" aria-label="Data de início" disabled>
+                </div>
+                <div class="date-field-group">
+                  <label class="date-check-row"><input id="due-date-enabled" type="checkbox" checked><span>Data de entrega</span></label>
+                  <div class="date-time-row"><input class="text-field" id="task-due" name="dueDate" type="date"><input class="text-field" id="task-due-time" type="time" aria-label="Horário de entrega"></div>
+                </div>
+                <label class="field-label date-extra-label" for="task-recurring">Recorrente</label>
+                <select class="text-field" id="task-recurring"><option value="none">Nunca</option><option value="daily">Diariamente</option><option value="weekly">Semanalmente</option><option value="monthly">Mensalmente</option><option value="yearly">Anualmente</option></select>
+                <label class="field-label date-extra-label" for="task-reminder">Definir lembrete</label>
+                <select class="text-field" id="task-reminder"><option value="none">Nenhum</option><option value="due">Na hora da entrega</option><option value="5m">5 minutos antes</option><option value="10m">10 minutos antes</option><option value="1d">1 dia antes</option><option value="2d">2 dias antes</option></select>
+                <p class="reminder-note">Lembretes ficam salvos no cartão neste protótipo local.</p>
+                <button class="small-popover-button full-width" type="button" data-save-dates>Salvar</button>
+                <button class="date-remove-button full-width" type="button" data-clear-date>Remover</button>
+              </div>
+            </div>
+            <div class="action-menu-wrap">
+              <button class="card-action-button" type="button" data-card-action="checklist">☑ <span>Checklist</span></button>
+              <div class="action-popover checklist-popover" id="checklist-popover" hidden>
+                <div class="popover-heading"><strong>Adicionar checklist</strong><button type="button" class="popover-close" data-close-popover aria-label="Fechar">×</button></div>
+                <label class="field-label" for="checklist-title">Título</label>
+                <input class="text-field" id="checklist-title" maxlength="50" value="Checklist" placeholder="Ex.: Próximos passos">
+                <label class="field-label copy-label" for="copy-checklist-from">Copiar itens de...</label>
+                <select class="text-field" id="copy-checklist-from"><option value="">(nenhum)</option></select>
+                <button class="small-popover-button full-width" type="button" data-create-checklist>Adicionar</button>
+              </div>
+            </div>
+            <button class="card-action-button" type="button" id="attach-image-button">⌁ <span>Anexo</span></button>
+            <input id="attachment-input" type="file" accept="image/*" multiple hidden>
+          </div>
+          <div class="card-meta-row">
+            <div class="selected-labels" id="selected-labels"></div>
+            <button class="due-chip" id="due-chip" type="button" data-card-action="dates" hidden></button>
+          </div>
+          <section class="dialog-content-section">
+            <h3 class="detail-section-title"><span>≡</span> Descrição</h3>
+            <textarea class="text-field description-field" id="task-description" name="description" rows="4" maxlength="800" placeholder="Adicione uma descrição mais detalhada..."></textarea>
+          </section>
+          <section class="dialog-content-section attachments-section" id="attachments-section" hidden>
+            <h3 class="detail-section-title"><span>⌁</span> Anexos</h3>
+            <div class="attachment-grid" id="attachment-grid"></div>
+          </section>
+          <div class="attachment-drop-hint" id="attachment-drop-hint"><span>＋</span> Arraste uma imagem ou cole com Ctrl+V</div>
+          <section class="checklist-groups" id="checklist-groups"></section>
+        </div>
+        <aside class="activity-panel">
+          <h3 class="activity-heading">▤ <span>Comentários e atividade</span></h3>
+          <div class="activity-list" id="activity-list"></div>
+          <div class="comment-composer">
+            <span class="comment-avatar">BB</span>
+            <div class="comment-entry"><textarea id="comment-input" rows="2" maxlength="400" placeholder="Escrever um comentário..."></textarea>
+              <button class="small-popover-button" type="button" id="add-comment">Enviar</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <div class="dialog-actions">
+        <button class="danger-button" id="delete-task" type="button">Excluir tarefa</button>
+        <div class="dialog-action-right">
+          <button class="quiet-button" id="dialog-cancel" type="button">Cancelar</button>
+          <button class="primary-button" id="dialog-focus" type="button">Focar nesta tarefa</button>
+          <button class="primary-button save-button" type="submit">Salvar</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="month-calendar-dialog" id="month-calendar-dialog" aria-labelledby="app-calendar-title">
+    <section class="month-calendar-panel">
+      <header class="month-calendar-header">
+        <div><p class="calendar-modal-kicker">SEU PLANEJAMENTO</p><h2 id="app-calendar-title">Calendário</h2></div>
+        <button class="month-calendar-close" id="month-calendar-close" type="button" aria-label="Fechar calendário">×</button>
+      </header>
+      <div class="calendar-mode-switch" role="group" aria-label="Visualização do calendário">
+        <button type="button" data-calendar-view="day">Dia</button><button class="is-active" type="button" data-calendar-view="month">Mês</button><button type="button" data-calendar-view="year">Ano</button>
+      </div>
+      <div class="app-calendar-toolbar"><button type="button" data-app-calendar-nav="-1" aria-label="Anterior">‹</button><strong id="app-calendar-period">mês e ano</strong><button type="button" data-app-calendar-nav="1" aria-label="Próximo">›</button><button class="calendar-today-button" id="app-calendar-today" type="button">Hoje</button></div>
+      <div class="app-calendar-weekdays" id="app-calendar-weekdays"><span>seg</span><span>ter</span><span>qua</span><span>qui</span><span>sex</span><span>sáb</span><span>dom</span></div>
+      <div class="app-calendar-grid" id="app-calendar-grid"></div>
+      <div class="app-calendar-year-grid" id="app-calendar-year-grid" hidden></div>
+      <div class="app-calendar-day-focus" id="app-calendar-day-focus" hidden></div>
+      <section class="calendar-day-details" aria-live="polite"><h3 id="selected-day-heading">Tarefas do dia</h3><div id="selected-day-tasks"></div></section>
+    </section>
+  </dialog>
+
+  <dialog class="delete-confirm-dialog" id="delete-confirm-dialog" aria-labelledby="delete-confirm-title">
+    <div class="delete-confirm-card">
+      <button class="delete-confirm-close" type="button" id="delete-confirm-close" aria-label="Fechar">×</button>
+      <p class="eyebrow">CONFIRMAÇÃO</p>
+      <h2 id="delete-confirm-title">Você quer realmente deletar?</h2>
+      <p id="delete-confirm-copy">Esta ação poderá ser desfeita por 15 segundos.</p>
+      <div class="delete-confirm-actions">
+        <button type="button" class="quiet-button" id="delete-confirm-no">Não deletar</button>
+        <button type="button" class="confirm-delete-button" id="delete-confirm-yes">Sim, deletar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="undo-toast" id="undo-toast" role="status" aria-live="polite" hidden>
+    <span class="undo-toast-icon">↶</span>
+    <div class="undo-toast-copy"><strong id="undo-message">Lista deletada.</strong><span>Esta mensagem fecha em <b id="undo-countdown">15</b>s</span></div>
+    <button type="button" id="undo-delete-button">Desfazer</button>
+    <span class="undo-progress"><i id="undo-progress-fill"></i></span>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
